@@ -44,10 +44,10 @@ namespace CRUD.Paginacao.WebApi.Controllers
             return NoContent();
         }
 
-        [HttpGet("name/{name}")]
-        public ActionResult GetAllByFilter(string name)
+        [HttpGet]
+        public ActionResult GetAllByFilter(string name, int page)
         {
-            var peoples = _repository.GetAllByFilter(name);
+            var peoples = _repository.GetAllByFilter(name, page);
 
             if (!peoples.Any())
             {

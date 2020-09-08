@@ -8,10 +8,26 @@ namespace CRUD.Paginacao.WebApi.Models
     {
         private IList<People> _peoples;
         private int _id;
+        private readonly int _itemsPerPage;
 
         public FakePeopleRepository()
         {
-            _peoples = new List<People>();
+            _peoples = GenerateFakes();
+            _itemsPerPage = 3;
+        }
+
+        private IList<People> GenerateFakes()
+        {
+            return new List<People>
+            {
+                new People{Id = 1, Name = "Josefina", BirthDate = new DateTime(1990, 1, 1), MaritalStatus = "Married", PartnerBirthDate = new DateTime(1990, 2,3), PartnerName = "Bolinha" },
+                new People{Id = 2, Name = "Marcelo", BirthDate = new DateTime(1990, 1, 1), MaritalStatus = "Married", PartnerBirthDate = new DateTime(1990, 2,3), PartnerName = "Bolinha" },
+                new People{Id = 3, Name = "Joana", BirthDate = new DateTime(1990, 1, 1), MaritalStatus = "Married", PartnerBirthDate = new DateTime(1990, 2,3), PartnerName = "Bolinha" },
+                new People{Id = 4, Name = "Amanda", BirthDate = new DateTime(1990, 1, 1), MaritalStatus = "Married", PartnerBirthDate = new DateTime(1990, 2,3), PartnerName = "Bolinha" },
+                new People{Id = 5, Name = "Gustavo", BirthDate = new DateTime(1990, 1, 1), MaritalStatus = "Married", PartnerBirthDate = new DateTime(1990, 2,3), PartnerName = "Bolinha" },
+                new People{Id = 6, Name = "Juca", BirthDate = new DateTime(1990, 1, 1), MaritalStatus = "Married", PartnerBirthDate = new DateTime(1990, 2,3), PartnerName = "Bolinha" },
+                new People{Id = 7, Name = "Brenda", BirthDate = new DateTime(1990, 1, 1), MaritalStatus = "Married", PartnerBirthDate = new DateTime(1990, 2,3), PartnerName = "Bolinha" },
+            };
         }
 
         public void Create(People people)
@@ -25,9 +41,13 @@ namespace CRUD.Paginacao.WebApi.Models
             _peoples.Remove(GetById(id));
         }
 
-        public IEnumerable<People> GetAllByFilter(string name)
+        public IEnumerable<People> GetAllByFilter(string name, int page)
         {
-            var peoples = _peoples.Where(p => p.Name.Contains(name));
+            page--;
+            var peoples = _peoples
+                .Skip(page * _itemsPerPage)
+                .Take(_itemsPerPage)
+                .Where(p => p.Name.Contains(name));
 
             return peoples;
         }
