@@ -11,16 +11,11 @@ namespace CRUD.Paginacao.WebApi.Controllers
     [Route("[controller]")]
     public class PeopleController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
+        private readonly IPeopleRepository _repository;
 
-        private readonly ILogger<PeopleController> _logger;
-
-        public PeopleController(ILogger<PeopleController> logger)
+        public PeopleController(IPeopleRepository repository)
         {
-            _logger = logger;
+            _repository = repository;
         }
 
         [HttpGet]
