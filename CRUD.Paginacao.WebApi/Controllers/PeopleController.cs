@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using CRUD.Paginacao.WebApi.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace CRUD.Paginacao.WebApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class PeopleController : ControllerBase
     {
         private readonly IPeopleRepository _repository;
@@ -18,17 +14,33 @@ namespace CRUD.Paginacao.WebApi.Controllers
             _repository = repository;
         }
 
-        [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
+        [HttpPost]
+        public ActionResult Create(People people)
         {
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            _repository.Create(people);
+
+            return Ok();
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult GetById(int id)
+        {
+            var people = _repository.GetById(id);
+
+            if (people == null)
             {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            })
-            .ToArray();
+                return NotFound();
+            }
+
+            return Ok(people);
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult Remove(int id)
+        {
+            _repository.Delete(id);
+
+            return NoContent();
         }
     }
 }
