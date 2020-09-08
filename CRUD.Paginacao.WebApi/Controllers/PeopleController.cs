@@ -9,16 +9,16 @@ namespace CRUD.Paginacao.WebApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    public class PeopleController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
-        private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ILogger<PeopleController> _logger;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public PeopleController(ILogger<PeopleController> logger)
         {
             _logger = logger;
         }
