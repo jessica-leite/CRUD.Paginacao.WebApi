@@ -1,5 +1,6 @@
 ﻿using CRUD.Paginacao.WebApi.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace CRUD.Paginacao.WebApi.Controllers
 {
@@ -41,6 +42,19 @@ namespace CRUD.Paginacao.WebApi.Controllers
             _repository.Delete(id);
 
             return NoContent();
+        }
+
+        [HttpGet("name/{name}")]
+        public ActionResult GetAllByFilter(string name)
+        {
+            var peoples = _repository.GetAllByFilter(name);
+
+            if (!peoples.Any())
+            {
+                return NotFound();
+            }
+
+            return Ok(peoples);
         }
     }
 }

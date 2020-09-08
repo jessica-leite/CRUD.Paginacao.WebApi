@@ -25,9 +25,11 @@ namespace CRUD.Paginacao.WebApi.Models
             _peoples.Remove(GetById(id));
         }
 
-        public IEnumerable<People> GetAllByFilter()
+        public IEnumerable<People> GetAllByFilter(string name)
         {
-            throw new NotImplementedException();
+            var peoples = _peoples.Where(p => p.Name.Contains(name));
+
+            return peoples;
         }
 
         public People GetById(int id)
